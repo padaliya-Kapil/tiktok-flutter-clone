@@ -29,23 +29,23 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, size: 30),
-            label: 'Home',
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, size: 30),
-            label: 'Search',
+            icon: Icon(Icons.chat_bubble, size: 30),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: CustomIcon(),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message, size: 30),
-            label: 'Messages',
+            icon: Icon(Icons.calendar_month_rounded, size: 30),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person, size: 30),
-            label: 'Profile',
+            label: '',
           ),
         ],
       ),

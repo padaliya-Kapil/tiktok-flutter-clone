@@ -12,15 +12,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int pageIdx = 0;
 
+  void _onItemTapped(int index) {
+    if (index != 0 && index != 1) {
+      // if last item is clicked
+      Navigator.pushNamed(context, '/signup'); // navigate to signup page
+    } else {
+      setState(() {
+        pageIdx = index;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (idx) {
-          setState(() {
-            pageIdx = idx;
-          });
-        },
+        onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
         backgroundColor: backgroundColor,
         selectedItemColor: Colors.red,
@@ -32,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble, size: 30),
+            icon: Icon(Icons.calendar_month_rounded, size: 30),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -40,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month_rounded, size: 30),
+            icon: Icon(Icons.chat_bubble, size: 30),
             label: '',
           ),
           BottomNavigationBarItem(

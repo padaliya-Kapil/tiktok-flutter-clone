@@ -7,16 +7,19 @@ class NepaliCalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NepaliDateTime first = NepaliDateTime(2075, 5);
-    final NepaliDateTime last = NepaliDateTime(2079, 3);
+    final NepaliDateTime first = NepaliDateTime(1970, 1);
+    final NepaliDateTime last = NepaliDateTime(2100, 12);
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            CleanNepaliCalendar(
-              headerDayBuilder: (_, index) {
-                return Align(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CleanNepaliCalendar(
+                controller: _nepaliCalendarController,
+                headerDayBuilder: (_, index) {
+                  return Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5.0),
@@ -25,59 +28,32 @@ class NepaliCalendarScreen extends StatelessWidget {
                         style:
                             TextStyle(color: (index == 6) ? Colors.red : null),
                       ),
-                    ));
-              },
-
-              // headerBuilder: (_,__,___,____,______)=>Text("header"),
-              headerDayType: HeaderDayType.fullName,
-              controller: _nepaliCalendarController,
-              onHeaderLongPressed: (date) {
-                print("header long pressed $date");
-              },
-              onHeaderTapped: (date) {
-                print("header tapped $date");
-              },
-              calendarStyle: CalendarStyle(
-                // weekEndTextColor : Colors.green,
-                selectedColor: Colors.deepOrange,
-                dayStyle: TextStyle(fontWeight: FontWeight.bold),
-                todayStyle: TextStyle(
-                  fontSize: 20.0,
-                ),
-                todayColor: Colors.orange.shade400,
-                // highlightSelected: true,
-                renderDaysOfWeek: true,
-                highlightToday: true,
+                    ),
+                  );
+                },
+                dateCellBuilder: (isToday, isSelected, isDisabled, nepaliDate,
+                        label, text, calendarStyle, isWeekend) =>
+                    cellBuilder(context, isToday, isSelected, isDisabled,
+                        nepaliDate, label, text, calendarStyle, isWeekend),
               ),
-              headerStyle: HeaderStyle(
-                enableFadeTransition: false,
-                centerHeaderTitle: false,
-                titleTextStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepOrange,
-                    fontSize: 20.0),
-              ),
-              initialDate: NepaliDateTime.now(),
-              firstDate: first,
-              lastDate: last,
-              language: Language.nepali,
-
-              onDaySelected: (day) {
-                print(day.toString());
-              },
-
-              // display the english date along with nepali date.
-              dateCellBuilder: cellBuilder,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget cellBuilder(isToday, isSelected, isDisabled, nepaliDate, label, text,
-      calendarStyle, isWeekend) {
-    // print(isSelected);
+  Widget cellBuilder(
+    BuildContext context,
+    bool isToday,
+    bool isSelected,
+    bool isDisabled,
+    NepaliDateTime nepaliDate,
+    String label,
+    String text,
+    CalendarStyle calendarStyle,
+    bool isWeekend,
+  ) {
     Decoration _buildCellDecoration() {
       if (isSelected && isToday) {
         return BoxDecoration(
@@ -112,25 +88,19 @@ class NepaliCalendarScreen extends StatelessWidget {
       duration: Duration(milliseconds: 2000),
       decoration: _buildCellDecoration(),
       child: Center(
-        child: Column(
-          children: [
-            Text(text,
-                style: TextStyle(
-                    fontSize: 20, color: isWeekend ? Colors.red : null)),
-
-            // to show events
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: CircleAvatar(
-                  radius: 1,
-                )),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Text(nepaliDate.toDateTime().day.toString(),
+        child: Expanded(
+          child: Column(
+            children: [
+              Text(text,
                   style: TextStyle(
-                      fontSize: 8, color: isWeekend ? Colors.red : null)),
-            ),
-          ],
+                      fontSize: 20, color: isWeekend ? Colors.red : null)),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CircleAvatar(
+                    radius: 1,
+                  )),
+            ],
+          ),
         ),
       ),
     );

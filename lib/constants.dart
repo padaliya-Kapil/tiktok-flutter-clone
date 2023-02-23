@@ -11,7 +11,7 @@ import 'package:tiktok_tutorial/views/screens/video_screen.dart';
 
 List pages = [
   VideoScreen(),
-  CalendarScreen(),
+  NepaliCalendarScreen(),
   GoLiveScreen(),
   ChatScreen(),
   ProfileScreen()
